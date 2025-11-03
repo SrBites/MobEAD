@@ -1,12 +1,6 @@
 // ESTE É O CONTEÚDO CORRETO PARA O SEU ARQUIVO Jenkinsfile
 pipeline {
     agent any 
-
-    // Define o scanner que vamos usar
-    tools {
-        // 'SonarScanner' é o nome que você deu em "Global Tool Configuration"
-        tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-    }
     
     stages {
         // O checkout é feito automaticamente pelo Jenkins
