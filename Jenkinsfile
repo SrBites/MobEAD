@@ -7,16 +7,22 @@ pipeline {
         // quando usamos "Pipeline script from SCM",
         // por isso NÃO TEMOS um estágio de 'Checkout'.
 
-        stage('CI - Build & SonarQube Analysis') {
-            steps {
-                echo 'Iniciando análise de qualidade com SonarQube...'
-                // 'SonarQube' é o nome que demos ao servidor na "Configure System"
+    stage('CI - Build & SonarQube Analysis') {
+        steps {
+            echo 'Iniciando análise de qualidade com SonarQube...'
+    
+            // script { ... } nos permite usar variáveis
+            script {
+                // 1. Pega o caminho da instalação da ferramenta
+                def scannerHome = tool 'SonarScanner' 
+    
+                // 2. Executa o scanner usando o CAMINHO COMPLETO
                 withSonarQubeEnv('SonarQube') {
-                    // O repositório MobEAD já tem um arquivo 'sonar-project.properties'
-                    sh "sonar-scanner"
+                    sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
         }
+    }
         
         stage('Quality Gate') {
             steps {
